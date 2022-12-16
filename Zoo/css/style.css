@@ -1,0 +1,175 @@
+
+	body {
+		background-image: url(../images/back.jpg);
+		font-family: 'Open Sans', sans-serif;
+		color: #777;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-attachment: fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	}
+
+	a {
+		color: #9ACD32;
+		font-weight: 400;
+	}
+	p  {
+		padding: 1px;
+	}
+	#menu {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	justify-content: center
+
+}
+	li {
+		display: inline-block;
+		padding: 5px 25px;
+	}
+
+	.mlogin {
+		margin: 170px auto 0;
+		-webkit-border-radius:4px;
+	}
+		.mregister {
+  margin: 80px auto 0;
+	}
+
+	.error {
+   margin: 40px auto 0;
+	border: 1px solid #777;
+ padding: 3px;
+	color: #fff;
+   text-align: center;
+ width: 650px;
+ background: #f58220;
+	}
+
+	.regtext {
+   font-size: 13px;
+   margin-top: 26px;
+   color: #777;
+	}
+
+	/*= КОНТЕЙНЕРЫ
+	--------------------------------------------------------*/
+	.container {
+		padding: 25px 16px 25px 10px;
+		font-weight: 400;
+		overflow: hidden;
+		width: 350px;
+		height: auto;
+		background: #fff;
+		-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+		-moz-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+		box-shadow: 0 1px 3px rgba(0,0,0,.13);
+	}
+	
+	.container h1 {
+		color: 	#556B2F;
+		text-align: center;
+		text-shadow: #6B8E23 1px 0 20px;
+		font-weight: 900;
+		border: 3px dashed 	#556B2F;
+		margin-top: 13px;
+	}
+	.container h2 {
+		text-align: justify;
+
+	}
+
+
+	.container label {
+	color: #777;
+	font-size: 14px;
+	}
+
+	#login {
+  width: 320px;
+	margin: auto;
+	padding-bottom: 15px;
+	}
+
+	.container form .input,.container input[type=text],.container input[type=number],.container input[type=password],.container input[type=e] {
+	background: #fbfbfb;
+	font-size: 24px;
+	line-height: 1;
+	width: 100%;
+	padding: 3px;
+ margin: 0 6px 5px 0;
+   outline: none;
+   border: 1px solid #d9d9d9;
+	}
+	
+	.container form .input:focus {
+	border: 1px solid #f58220;
+ -webkit-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+-moz-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+ box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+	}
+
+	/*= ПОВІДОМЛЕННЯ
+	--------------------------------------------------------*/
+	#message {
+		text-align: center;
+		color: grey;
+		width: 300px;
+	}
+	
+	
+	/*= КНОПКИ
+	--------------------------------------------------------*/
+	
+	.button{
+		border: solid 1px #556B2F;
+		background: #9ACD32;
+		background: -webkit-gradient(linear, left top, leftbottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a, #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+		color: #fff;
+		padding: 7px 12px;
+		-webkit-border-radius:4px;
+		text-decoration: none;
+		background-size: 300px;
+		moz-border-radius:4px;
+		border-radius:4px;
+		min-width: 76px;
+		cursor: pointer;
+	}
+	.button1{
+		border: solid 1px #556B2F;
+		background: #9ACD32;
+		background: -webkit-gradient(linear, left top, leftbottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a, #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+		color: #fff;
+		padding: 7px 12px;
+		-webkit-border-radius:4px;
+		text-decoration: none;
+		background-size: 300px;
+		moz-border-radius:4px;
+		border-radius:4px;
+		min-width: 76px;
+		cursor: pointer;
+		margin: 0 auto;
+		display: block;		
+		text-align: center;
+	}
+	
+	.button:hover,.button1:hover{
+		background: #6B8E23;
+		background: -webkit-gradient(linear, left top, leftbottom, from(#f88e11), to(#f06015));
+		background: -moz-linear-gradient(top,  #f88e11, #f06015);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+	}
+
+	footer {
+		color: white;
+		font-size: 14px;
+		text-align: center;
+		margin-top: 20px;
+	}
