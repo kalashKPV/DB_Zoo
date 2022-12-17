@@ -43,7 +43,7 @@ if(isset($_POST["login"])){
 		} else {
 	//  $message = "Invalid username or password!";
 
-			echo  "Invalid username or password!";
+			$message = "Invalid username or password!";
 		}
 	} else {
 		$message = "All fields are required!";
@@ -62,6 +62,9 @@ if(isset($_POST["login"])){
 				<p><label for="user_pass">Пароль<br>
 					<input class="input" id="password" name="password"size="20"
 					type="password" value=""></label></p> 
+					<?php 
+					echo "<p id = message> $message </p>"; 
+					?>
 					<p class="submit"><input class="button" name="login"type= "submit" value="Log In"></p>
 					<p class="regtext">Ще не зареєстровані?<a href= "register.php">Реєстрація</a>!</p>
 				</form>
