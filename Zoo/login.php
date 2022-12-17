@@ -30,8 +30,6 @@ if(isset($_POST["login"])){
 			}
 			if($username == $dbusername && $password == $dbpassword && (0 == $dbis_admin || 1 == $dbis_admin))
 			{
-	// старое место расположения
-	//  session_start();
 				$_SESSION['session_username']=$username;	 
 				/* Перенаправление браузера */
 				header("Location: Visitor/main.php");
@@ -41,7 +39,6 @@ if(isset($_POST["login"])){
 				header("Location: Employee/main.php");
 			}
 		} else {
-	//  $message = "Invalid username or password!";
 
 			$message = "Invalid username or password!";
 		}
