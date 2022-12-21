@@ -26,7 +26,6 @@ function getPosts()
 {
     $posts = array();
     $posts[0] = trim($_POST['animalID']);
-    $posts[1] = trim($_POST['kind']);
     $posts[2] = trim($_POST['diet']);
     $posts[5] = trim($_POST['lastName']);
     $posts[6] = trim($_POST['type_of_animals']);
@@ -80,21 +79,45 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="animal.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="animalID" min="1" placeholder="Id" value="<?php echo $animalID;?>"></label><br>
-            <label for="user_login">Вид<br><input type="text" name="kind" placeholder="Kind" value="<?php echo $kind;?>"></label><br>
-            <label for="user_login">Дієта<br><input type="text" name="diet" placeholder="Diet" value="<?php echo $diet;?>"></label><br>
-            <label for="user_login">Доглядаючий<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
-            <label for="user_login">Тип тварини<br><input type="text" name="type_of_animals" placeholder="Type of animals" value="<?php echo $type_of_animals;?>"></label><br>
-            <div>                
-                <!-- Input For Find Values With The given ID -->
-                <input type="submit" class="button"  name="search" value="Find">
-            </div>            
-            <?php 
-            echo "<p id = message> $var1 </p>"; 
-            ?>           
-            <p><a href="main.php" class="button">Повернення в головне меню</a></p>     
-        </form>
-    </div>
+            <label for="user_login">Вид<br><select style="
+            background: #fbfbfb;
+            font-size: 24px;
+            line-height: 1;
+            width: 100%;
+            padding: 3px;
+            margin: 0 6px 5px 0;
+            outline: none;
+            border: 1px solid #d9d9d9;" name="animalID">
+            <option name="animalID" value="<?php echo $animal["animalID"];?>">
+                <?php echo $kind;?>
+            </option>
+            <?php
+            include("../includes/connections.php");
+            $all = mysqli_query($con,"SELECT * FROM `animal`");
+            ?>
+            <?php
+            while ($animal = mysqli_fetch_array($all)):;
+                ?>
+
+                <option name="animalID" value="<?php echo $animal["animalID"];?>">
+                    <?php echo $animal["kind"];?>
+                    <?php $animalID = $animal["animalID"];?>
+                </option>
+            <?php endwhile;?>
+        </select></label><br>
+        <label for="user_login">Дієта<br><input type="text" name="diet" value="<?php echo $diet;?>"></label><br>
+        <label for="user_login">Доглядаючий<br><input type="text" name="lastName" value="<?php echo $lastName;?>"></label><br>
+        <label for="user_login">Тип тварини<br><input type="text" name="type_of_animals" value="<?php echo $type_of_animals;?>"></label><br>
+        <div>                
+            <!-- Input For Find Values With The given ID -->
+            <input type="submit" class="button"  name="search" value="Find">
+        </div>            
+        <?php 
+        echo "<p id = message> $var1 </p>"; 
+        ?>           
+        <p><a href="main.php" class="button">Повернення в головне меню</a></p>     
+    </form>
+</div>
 </div>
 <?php include("../includes/footer.php"); ?>      
 

@@ -30,8 +30,6 @@ function getPosts()
     $posts[2] = trim($_POST['diet']);
     $posts[3] = trim($_POST['employeeID']);
     $posts[4] = trim($_POST['sectionID']);
-    $posts[5] = trim($_POST['lastName']);
-    $posts[6] = trim($_POST['type_of_animals']);
     return $posts;
 }
 $var1= '';
@@ -146,42 +144,6 @@ if(isset($_POST['delete']))
     }
 }
 
-// Reload
-if(isset($_POST['reload']))
-{
-    $data = getPosts();
-    if(empty($data[0]))
-    {
-        $var1= 'Enter The animal Id To Reload';
-    }  else {
-        
-        $reloadStmt = $con->prepare('SELECT e.lastName, s.type_of_animals FROM animal a,employee e,section s WHERE e.employeeID = :employeeID AND s.sectionID = :sectionID;');
-        $reloadStmt->execute(array(
-                    ':employeeID'=> htmlspecialchars($data[3]),
-                    ':sectionID'=> htmlspecialchars($data[4])
-        ));
-        
-        if($reloadStmt)
-        {
-            $user = $reloadStmt->fetch();
-            if(empty($user))
-            {
-                $var1= 'No animal For This Id';
-            } else {
-
-                $animalID = $data[0];
-                $kind = $data[1];
-                $diet = $data[2];
-                $employeeID = $data[3];
-                $sectionID = $data[4];
-                $lastName = $user[0];
-                $type_of_animals = $user[1];
-            }
-        }
-        
-    }
-}
-
 ?>
 
 <?php
@@ -196,14 +158,85 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="animal.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="animalID" min="1" placeholder="Id" value="<?php echo $animalID;?>"></label><br>
-            <label for="user_login">Вид<br><input type="text" name="kind" placeholder="Kind" value="<?php echo $kind;?>"></label><br>
-            <label for="user_login">Дієта<br><input type="text" name="diet" placeholder="Diet" value="<?php echo $diet;?>"></label><br>
-            <label for="user_login">Id працівника<br><input type="number" name="employeeID" min="1" placeholder="Employee" value="<?php echo $employeeID;?>">
-            <label for="user_login">Прізвище працівника<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
-            <label for="user_login">Id секції<br><input type="number" name="sectionID" min="1" max="4"  placeholder="Section " value="<?php echo $sectionID;?>">
-            <label for="user_login">Секція<br><input type="text" name="type_of_animals" placeholder="Type of animals" value="<?php echo $type_of_animals;?>">
-            <input type="submit" class="button"  name="reload" value="Reload"><br><br>
+            <label for="user_login">Id<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="animalID">
+                <option name="animalID" value="<?php echo $animalID;?>">
+                    <?php echo $animalID;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `animal`");
+                ?>
+                <?php
+                while ($animal = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="animalID" value="<?php echo $animal["animalID"];?>">
+                        <?php echo $animal["animalID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Вид<br><input type="text" name="kind" value="<?php echo $kind;?>"></label><br>
+            <label for="user_login">Дієта<br><input type="text" name="diet" value="<?php echo $diet;?>"></label><br>
+                <label for="user_login">Доглядаючий<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="employeeID">
+                <option name="employeeID" value="<?php echo $employeeID;?>">
+                    <?php echo $lastName;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `employee` WHERE post = 'Доглядаючий' ");
+                ?>
+                <?php
+                while ($employee = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="employeeID" value="<?php echo $employee["employeeID"];?>">
+                        <?php echo $employee["lastName"];?>
+                        <?php $employeeID = $employee["employeeID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+                <label for="user_login">Секція<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="sectionID">
+                <option name="sectionID" value="<?php echo $sectionID;?>">
+                    <?php echo $type_of_animals;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `section`");
+                ?>
+                <?php
+                while ($section = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="sectionID" value="<?php echo $section["sectionID"];?>">
+                        <?php echo $section["type_of_animals"];?>
+                        <?php $sectionID = $section["sectionID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br><br>
             <div>
                 <!-- Input For Add Values To Database-->
                 <input type="submit" class="button" name="insert" value="Add">

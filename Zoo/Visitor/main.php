@@ -12,6 +12,7 @@ else:
 	<div id="login">
 		<h1>База данних "Зоопарк"</h1>
 		<form action="" id="main" method="post"> 
+			<p><a href="ticket.php" class="button1">Квитки</a></p>  
 			<p><a href="section.php" class="button1">Секції</a></p> 
 			<p><a href="animal.php" class="button1">Тварини</a></p>
 			<p><a href="souvenir.php" class="button1">Сувеніри</a></p>

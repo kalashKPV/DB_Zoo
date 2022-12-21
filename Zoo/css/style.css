@@ -1,59 +1,59 @@
 
-	body {
-		background-image: url(../images/back.jpg);
-		font-family: 'Open Sans', sans-serif;
-		color: #777;
-		background-repeat: no-repeat;
-		background-position: center center;
-		background-attachment: fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-	}
+body {
+	background-image: url(../images/back.jpg);
+	font-family: 'Open Sans', sans-serif;
+	color: #777;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
 
-	a {
-		color: #9ACD32;
-		font-weight: 400;
-	}
-	p  {
-		padding: 1px;
-	}
-	#menu {
+a {
+	color: #9ACD32;
+	font-weight: 400;
+}
+p  {
+	padding: 1px;
+}
+#menu {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
 	justify-content: center
 
 }
-	li {
-		display: inline-block;
-		padding: 5px 25px;
-	}
+li {
+	display: inline-block;
+	padding: 5px 25px;
+}
 
-	.mlogin {
-		margin: 170px auto 0;
-		-webkit-border-radius:4px;
-	}
-		.mregister {
-  margin: 80px auto 0;
-	}
+.mlogin {
+	margin: 170px auto 0;
+	-webkit-border-radius:4px;
+}
+.mregister {
+	margin: 80px auto 0;
+}
 
-	.error {
-   margin: 40px auto 0;
+.error {
+	margin: 40px auto 0;
 	border: 1px solid #777;
- padding: 3px;
+	padding: 3px;
 	color: #fff;
-   text-align: center;
- width: 650px;
- background: #f58220;
-	}
+	text-align: center;
+	width: 650px;
+	background: #f58220;
+}
 
-	.regtext {
-   font-size: 13px;
-   margin-top: 26px;
-   color: #777;
-	}
+.regtext {
+	font-size: 13px;
+	margin-top: 26px;
+	color: #777;
+}
 
 	/*= КОНТЕЙНЕРЫ
 	--------------------------------------------------------*/
@@ -84,32 +84,32 @@
 
 
 	.container label {
-	color: #777;
-	font-size: 14px;
+		color: #777;
+		font-size: 14px;
 	}
 
 	#login {
-  width: 320px;
-	margin: auto;
-	padding-bottom: 15px;
+		width: 320px;
+		margin: auto;
+		padding-bottom: 15px;
 	}
 
 	.container form .input,.container input[type=text],.container input[type=number],.container input[type=password],.container input[type=e] {
-	background: #fbfbfb;
-	font-size: 24px;
-	line-height: 1;
-	width: 100%;
-	padding: 3px;
- margin: 0 6px 5px 0;
-   outline: none;
-   border: 1px solid #d9d9d9;
+		background: #fbfbfb;
+		font-size: 24px;
+		line-height: 1;
+		width: 100%;
+		padding: 3px;
+		margin: 0 6px 5px 0;
+		outline: none;
+		border: 1px solid #d9d9d9;
 	}
 	
 	.container form .input:focus {
-	border: 1px solid #f58220;
- -webkit-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
--moz-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
- box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+		border: 1px solid #f58220;
+		-webkit-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+		-moz-box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
+		box-shadow: 0 0 3px 0 rgba(245,130,32,0.75);
 	}
 
 	/*= ПОВІДОМЛЕННЯ

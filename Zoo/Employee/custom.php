@@ -27,8 +27,6 @@ function getPosts()
     $posts[0] = trim($_POST['customID']);
     $posts[1] = trim($_POST['souvenirID']);
     $posts[2] = trim($_POST['visitorID']);
-    $posts[3] = trim($_POST['sname']);
-    $posts[4] = trim($_POST['lastName']);
     return $posts;
 }
 $var1= '';
@@ -58,8 +56,8 @@ if(isset($_POST['search']))
                 $customID = $user[0];
                 $souvenirID = $user[1];
                 $visitorID = $user[2];
-                $sname = $user[3];
-                $lastName = $user[4];
+                $lastName = $user[3];
+                $sname = $user[4];
             }
         }
         
@@ -100,7 +98,7 @@ if(isset($_POST['update']))
         $var1= 'Enter The custom To Update';
     }  else {
         
-        $updateStmt = $con->prepare('UPDATE `custom` SET `souvenirID` = :souvenirID, visitorID = :visitorID WHERE customID = :customID');
+        $updateStmt = $con->prepare('UPDATE `custom` SET `souvenirID` = :souvenirID, `visitorID` = :visitorID WHERE customID = :customID');
         $updateStmt->execute(array(
                     ':customID'=> htmlspecialchars($data[0]),
                     ':souvenirID'=> htmlspecialchars($data[1]),
@@ -136,41 +134,6 @@ if(isset($_POST['delete']))
         
     }
 }
-
-// Reload
-if(isset($_POST['reload']))
-{
-    $data = getPosts();
-    if(empty($data[0]))
-    {
-        $var1= 'Enter The custom Id To Reload';
-    }  else {
-        
-        $reloadStmt = $con->prepare('SELECT v.lastName, s.sname FROM custom c,visitor v,souvenir s WHERE v.visitorID = :visitorID AND s.souvenirID = :souvenirID;');
-        $reloadStmt->execute(array(
-                    ':visitorID'=> htmlspecialchars($data[1]),
-                    ':souvenirID'=> htmlspecialchars($data[2])
-        ));
-        
-        if($reloadStmt)
-        {
-            $user = $reloadStmt->fetch();
-            if(empty($user))
-            {
-                $var1= 'No custom For This Id';
-            } else {
-
-                $customID = $data[0];
-                $souvenirID = $data[1];
-                $visitorID = $data[2];
-                $sname = $user[0];
-                $lastName = $user[1];
-            }
-        }
-        
-    }
-}
-
 ?>
 <?php
 
@@ -184,12 +147,83 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="custom.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="customID" min="1" placeholder="Id" value="<?php echo $customID;?>"></label><br>
-            <label for="user_login">Id сувеніра<br><input type="number" name="souvenirID" min="1" placeholder="Souvenir" value="<?php echo $souvenirID;?>"></label><br>
-            <label for="user_login">Сувенір<br><input type="text" name="sname" placeholder="Souvenir Name" value="<?php echo $sname;?>"></label><br>
-            <label for="user_login">Id покупця<br><input type="number" name="visitorID" min="1" placeholder="Visitor" value="<?php echo $visitorID;?>"></label><br>
-            <label for="user_login">Прізвище покупця<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
-            <input type="submit" class="button"  name="reload" value="Reload"><br><br>
+            <label for="user_login">Id<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="customID">
+                <option name="customID" value="<?php echo $customID;?>">
+                    <?php echo $customID;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `custom`");
+                ?>
+                <?php
+                while ($custom = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="ticketID" value="<?php echo $custom["customID"];?>">
+                        <?php echo $custom["customID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Сувенір<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="souvenirID">
+                <option name="souvenirID" value="<?php echo $souvenirID;?>">
+                    <?php echo $sname;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `souvenir`");
+                ?>
+                <?php
+                while ($souvenir = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="souvenirID" value="<?php echo $souvenir["souvenirID"];?>">
+                        <?php echo $souvenir["sname"];?>
+                        <?php $souvenirID = $souvenir["souvenirID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Відвідувач<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="visitorID">
+                <option name="visitorID" value="<?php echo $visitorID;?>">
+                    <?php echo $lastName;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `visitor`");
+                ?>
+                <?php
+                while ($visitor = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="visitorID" value="<?php echo $visitor["visitorID"];?>">
+                        <?php echo $visitor["lastName"];?>
+                        <?php $visitorID = $visitor["visitorID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br><br>
             <div>
                 <!-- Input For Add Values To Database-->
                 <input type="submit" class="button" name="insert" value="Add">

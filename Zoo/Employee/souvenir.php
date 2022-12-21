@@ -27,7 +27,6 @@ function getPosts()
     $posts[1] = trim($_POST['sname']);
     $posts[2] = trim($_POST['price']);
     $posts[3] = trim($_POST['employeeID']);
-    $posts[4] = trim($_POST['lastName']);
     return $posts;
 }
 $var1= '';
@@ -144,39 +143,6 @@ if(isset($_POST['delete']))
     }
 }
 
-// Reload
-if(isset($_POST['reload']))
-{
-    $data = getPosts();
-    if(empty($data[0]))
-    {
-        $var1= 'Enter The User Id To Reload';
-    }  else {
-        
-        $reloadStmt = $con->prepare('SELECT e.lastName FROM souvenir s,employee e WHERE e.employeeID = :employeeID;');
-        $reloadStmt->execute(array(
-            ':employeeID'=> htmlspecialchars($data[3])
-        ));
-        
-        if($reloadStmt)
-        {
-            $user = $reloadStmt->fetch();
-            if(empty($user))
-            {
-                $var1= 'No Data For This Id';
-            } else {
-
-                $souvenirID = $data[0];
-                $sname = $data[1];
-                $price = $data[2];
-                $employeeID = $data[3];
-                $lastName = $user[0];
-            }
-        }
-        
-    }
-}
-
 ?>
 <?php
 
@@ -190,12 +156,59 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="souvenir.php" method="post">
-             <label for="user_login">Id<br><input type="number" name="souvenirID" min="1" placeholder="Id" value="<?php echo $souvenirID;?>"></label><br>
-            <label for="user_login">Сувенір<br><input type="text" name="sname" placeholder="Souvenir Name" value="<?php echo $sname;?>"></label><br>
-            <label for="user_login">Ціна<br><input type="text" name="price" placeholder="Price" value="<?php echo $price;?>"></label><br>
-            <label for="user_login">Id продавеця<br><input type="number" name="employeeID"  min="1" placeholder="Employee" value="<?php echo $employeeID;?>"></label><br>
-            <label for="user_login">Продавець<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
-            <input type="submit" class="button"  name="reload" value="Reload"><br><br>
+            <label for="user_login">Id<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="souvenirID">
+                <option name="souvenirID" value="<?php echo $souvenirID;?>">
+                    <?php echo $souvenirID;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `souvenir`");
+                ?>
+                <?php
+                while ($souvenir = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="ticketID" value="<?php echo $souvenir["souvenirID"];?>">
+                        <?php echo $souvenir["souvenirID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Сувенір<br><input type="text" name="sname" value="<?php echo $sname;?>"></label><br>
+            <label for="user_login">Ціна<br><input type="text" name="price" value="<?php echo $price;?>"></label><br>
+            <label for="user_login">Продавець<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="employeeID">
+                <option name="employeeID" value="<?php echo $employeeID;?>">
+                    <?php echo $lastName;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `employee` WHERE post = 'Продавець' ");
+                ?>
+                <?php
+                while ($employee = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="employeeID" value="<?php echo $employee["employeeID"];?>">
+                        <?php echo $employee["lastName"];?>
+                        <?php $employeeID = $employee["employeeID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br><br>
             <div>
                 <!-- Input For Add Values To Database-->
                 <input type="submit" class="button" name="insert" value="Add">

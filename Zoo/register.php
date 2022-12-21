@@ -3,20 +3,20 @@ $message = "";
 include("includes/connections.php");
 if(isset($_POST["register"])){
 
-    if(!empty($_POST['full_name']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password'])) {
-      $full_name= htmlspecialchars($_POST['full_name']);
+    if(!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['password'])) {
+      $lastName= htmlspecialchars($_POST['lastName']);
+      $firstName= htmlspecialchars($_POST['firstName']);
       $email=htmlspecialchars($_POST['email']);
       $username=htmlspecialchars($_POST['username']);
       $password=htmlspecialchars($_POST['password']);
       $is_admin=$_POST['is_admin'];
-      echo $is_admin;
       $query=mysqli_query($con, "SELECT * FROM usertbl WHERE username='".$username."'");
       $numrows=mysqli_num_rows($query);
       if($numrows==0)
       {
         $sql="INSERT INTO usertbl
-        (full_name, email, username,password,is_admin)
-        VALUES('$full_name','$email', '$username', '$password', '$is_admin')";
+        (lastName, firstName, email, username,password,is_admin)
+        VALUES('$lastName','$firstName','$email', '$username', '$password', '$is_admin')";
         $result=mysqli_query($con, $sql);
         if($result){
             $message = "Account Successfully Created";
@@ -36,8 +36,10 @@ if(isset($_POST["register"])){
     <div id="login">
        <h1>Реєстрація</h1>
        <form action="register.php" id="registerform" method="post"name="registerform">
-           <p><label for="user_login">Повне ім'я<br>
-               <input class="input" id="full_name" name="full_name"size="32"  type="text" value=""></label></p>
+           <p><label for="user_login">Призвіще<br>
+               <input class="input" id="lastName" name="lastName"size="32"  type="text" value=""></label></p>
+               <p><label for="user_login">Ім'я<br>
+               <input class="input" id="firstName" name="firstName"size="32"  type="text" value=""></label></p>
                <p><label for="user_pass">E-mail<br>
                 <input class="input" id="email" name="email" size="32"type="email" value=""></label></p>
                 <p><label for="user_pass">Ім'я користувача<br>

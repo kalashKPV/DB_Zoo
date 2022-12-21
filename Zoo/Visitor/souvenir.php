@@ -24,7 +24,6 @@ function getPosts()
 {
     $posts = array();
     $posts[0] = trim($_POST['souvenirID']);
-    $posts[1] = trim($_POST['sname']);
     $posts[2] = trim($_POST['price']);
     $posts[4] = trim($_POST['lastName']);
     return $posts;
@@ -75,10 +74,34 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="souvenir.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="souvenirID" min="1" placeholder="Id" value="<?php echo $souvenirID;?>"></label><br>
-            <label for="user_login">Сувенір<br><input type="text" name="sname" placeholder="Souvenir Name" value="<?php echo $sname;?>"></label><br>
-            <label for="user_login">Ціна<br><input type="text" name="price" placeholder="Price" value="<?php echo $price;?>"></label><br>
-            <label for="user_login">Продавець<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
+            <label for="user_login">Сувенір<br><select style="
+            background: #fbfbfb;
+            font-size: 24px;
+            line-height: 1;
+            width: 100%;
+            padding: 3px;
+            margin: 0 6px 5px 0;
+            outline: none;
+            border: 1px solid #d9d9d9;" name="souvenirID">
+            <option name="souvenirID" value="<?php echo $souvenir["souvenirID"];?>">
+                <?php echo $sname;?>
+            </option>
+            <?php
+            include("../includes/connections.php");
+            $all = mysqli_query($con,"SELECT * FROM `souvenir`");
+            ?>
+            <?php
+            while ($souvenir = mysqli_fetch_array($all)):;
+                ?>
+
+                <option name="souvenirID" value="<?php echo $souvenir["souvenirID"];?>">
+                    <?php echo $souvenir["sname"];?>
+                    <?php $souvenirID = $souvenir["souvenirID"];?>
+                </option>
+            <?php endwhile;?>
+        </select></label><br>
+            <label for="user_login">Ціна<br><input type="text" name="price" value="<?php echo $price;?>"></label><br>
+            <label for="user_login">Продавець<br><input type="text" name="lastName" value="<?php echo $lastName;?>"></label><br>
             <div>
                 <!-- Input For Find Values With The given ID -->
                 <input type="submit" class="button"  name="search" value="Find">

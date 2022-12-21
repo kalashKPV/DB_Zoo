@@ -29,8 +29,6 @@ function getPosts()
     $posts[1] = trim($_POST['time']);
     $posts[2] = trim($_POST['visitorID']);
     $posts[3] = trim($_POST['sectionID']);
-    $posts[4] = trim($_POST['lastName']);
-    $posts[5] = trim($_POST['type_of_animals']);
     return $posts;
 }
 $var1= '';
@@ -82,7 +80,7 @@ if(isset($_POST['insert']))
     if(empty($data[1]) || empty($data[2]) || empty($data[3]))
     {
         $var1= 'Enter The Ticket To Insert';
-    }  else if(!validateDate($data[2])===TRUE)
+    }  else if(!validateDate($data[1])===TRUE)
     {
         $var1= 'Enter corect Time';
     }  else {
@@ -109,7 +107,7 @@ if(isset($_POST['update']))
     if(empty($data[0]) || empty($data[1]) || empty($data[2]) || empty($data[3]))
     {
         $var1= 'Enter The Ticket To Update';
-    }  else if(!validateDate($data[2])===TRUE)
+    }  else if(!validateDate($data[1])===TRUE)
     {
         $var1= 'Enter corect Time';
     }  else {
@@ -152,41 +150,6 @@ if(isset($_POST['delete']))
     }
 }
 
-// Reload
-if(isset($_POST['reload']))
-{
-    $data = getPosts();
-    if(empty($data[0]))
-    {
-        $var1= 'Enter The Ticket Id To Reload';
-    }  else {
-        
-        $reloadStmt = $con->prepare('SELECT v.lastName, s.type_of_animals FROM ticket t,visitor v,section s WHERE v.visitorID = :visitorID AND s.sectionID = :sectionID;');
-        $reloadStmt->execute(array(
-            ':visitorID'=> htmlspecialchars($data[2]),
-            ':sectionID'=> htmlspecialchars($data[3])
-        ));
-        
-        if($reloadStmt)
-        {
-            $user = $reloadStmt->fetch();
-            if(empty($user))
-            {
-                $var1= 'No Ticket For This Id';
-            } else {
-
-                $ticketID = $data[0];
-                $time = $data[1];
-                $visitorID = $data[2];
-                $sectionID = $data[3];
-                $lastName = $user[0];
-                $type_of_animals = $user[1];
-            }
-        }
-        
-    }
-}
-
 ?>
 <?php
 
@@ -200,13 +163,84 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="ticket.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="ticketID" min="1" placeholder="Id" value="<?php echo $ticketID;?>"></label><br>
-            <label for="user_login">Час<br><input type="text" name="time" placeholder="Time" value="<?php echo $time;?>"></label><br>
-            <label for="user_login">Id відвідувача<br><input type="number" name="visitorID" min="1" placeholder="Visitor" value="<?php echo $visitorID;?>"></label><br>
-            <label for="user_login">Відвідувач<br><input type="text" name="lastName" placeholder="Visitor Name" value="<?php echo $lastName;?>"></label><br>
-            <label for="user_login">Id секції<br><input type="number" name="sectionID" min="1" max="4"  placeholder="Section " value="<?php echo $sectionID;?>"></label><br>
-            <label for="user_login">Секція<br><input type="text" name="type_of_animals" placeholder="Type of animals" value="<?php echo $type_of_animals;?>"></label><br>
-            <input type="submit" class="button"  name="reload" value="Reload"><br><br>
+            <label for="user_login">Id<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="ticketID">
+                <option name="ticketID" value="<?php echo $ticketID;?>">
+                    <?php echo $ticketID;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `ticket`");
+                ?>
+                <?php
+                while ($ticket = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="ticketID" value="<?php echo $ticket["ticketID"];?>">
+                        <?php echo $ticket["ticketID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Час<br><input type="text" name="time"  value="<?php echo $time;?>"></label><br>
+            <label for="user_login">Відвідувач<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="visitorID">
+                <option name="visitorID" value="<?php echo $visitorID;?>">
+                    <?php echo $lastName;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `visitor`");
+                ?>
+                <?php
+                while ($visitor = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="visitorID" value="<?php echo $visitor["visitorID"];?>">
+                        <?php echo $visitor["lastName"];?>
+                        <?php $visitorID = $visitor["visitorID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+                <label for="user_login">Секція<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="sectionID">
+                <option name="sectionID" value="<?php echo $sectionID;?>">
+                    <?php echo $type_of_animals;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `section`");
+                ?>
+                <?php
+                while ($section = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="sectionID" value="<?php echo $section["sectionID"];?>">
+                        <?php echo $section["type_of_animals"];?>
+                        <?php $sectionID = $section["sectionID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br><br>
             <div>
                 <!-- Input For Add Values To Database-->
                 <input type="submit" class="button" name="insert" value="Add">

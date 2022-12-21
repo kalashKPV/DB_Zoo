@@ -9,7 +9,7 @@ try{
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
 } catch (Exception $ex) {
-    
+
     $var1= 'Not Connected '.$ex->getMessage();
     
 }
@@ -40,7 +40,7 @@ if(isset($_POST['search']))
     {
         $var1= 'Enter The Visitor Id To Search';
     }  else {
-        
+
         $searchStmt = $con->prepare('SELECT * FROM visitor WHERE visitorID = :visitorID');
         $searchStmt->execute(array(
             ':visitorID'=> htmlspecialchars($data[0])
@@ -74,7 +74,7 @@ if(isset($_POST['insert']))
     {
         $var1= 'Enter The Visitor To Insert';
     }  else {
-        
+
         $insertStmt = $con->prepare('INSERT INTO `visitor`(`lastName`, `firstName`, `age`) VALUES (:lastName,:firstName,:age)');
         $insertStmt->execute(array(
             ':lastName'=> htmlspecialchars($data[1]),
@@ -98,7 +98,7 @@ if(isset($_POST['update']))
     {
         $var1= 'Enter The Visitor To Update';
     }  else {
-        
+
         $updateStmt = $con->prepare('UPDATE `visitor` SET lastName = :lastName, firstName = :firstName, age = :age WHERE visitorID = :visitorID');
         $updateStmt->execute(array(
             ':visitorID'=> htmlspecialchars($data[0]),
@@ -144,18 +144,42 @@ if(isset($_POST['delete']))
 session_start();
 
 if(!isset($_SESSION["session_username1"])):
-header("location:login.php");
+    header("location:login.php");
 else:
-?>
+    ?>
 
-<?php include("../includes/header.php");?>
-<div class="container mlogin">
-    <div id="login">
-        <form action="visitor.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="visitorID"  min="1" placeholder="Id"  value="<?php echo $visitorID;?>"></label><br>
-            <label for="user_login">Призвіще<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
-            <label for="user_login">Ім'я<br><input type="text" name="firstName" placeholder="First Name" value="<?php echo $firstName;?>"></label><br>
-            <label for="user_login">Вік<br><input type="number" name="age"  min="1" placeholder="Age" value="<?php echo $age;?>"></label><br><br>
+    <?php include("../includes/header.php");?>
+    <div class="container mlogin">
+        <div id="login">
+            <form action="visitor.php" method="post">
+                <label for="user_login">Id<br><select style="
+                background: #fbfbfb;
+                font-size: 24px;
+                line-height: 1;
+                width: 100%;
+                padding: 3px;
+                margin: 0 6px 5px 0;
+                outline: none;
+                border: 1px solid #d9d9d9;" name="visitorID">
+                <option name="visitorID" value="<?php echo $visitorID;?>">
+                    <?php echo $visitorID;?>
+                </option>
+                <?php
+                include("../includes/connections.php");
+                $all = mysqli_query($con,"SELECT * FROM `visitor`");
+                ?>
+                <?php
+                while ($visitor = mysqli_fetch_array($all)):;
+                    ?>
+
+                    <option name="visitorID" value="<?php echo $visitor["visitorID"];?>">
+                        <?php echo $visitor["visitorID"];?>
+                    </option>
+                <?php endwhile;?>
+            </select></label><br>
+            <label for="user_login">Призвіще<br><input type="text" name="lastName" value="<?php echo $lastName;?>"></label><br>
+            <label for="user_login">Ім'я<br><input type="text" name="firstName" value="<?php echo $firstName;?>"></label><br>
+            <label for="user_login">Вік<br><input type="number" name="age"  min="1" value="<?php echo $age;?>"></label><br><br>
             <div>
                 <!-- Input For Add Values To Database-->
                 <input type="submit" class="button" name="insert" value="Add">

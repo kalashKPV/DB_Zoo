@@ -74,9 +74,9 @@ else:
 <div class="container mlogin">
     <div id="login">
         <form action="custom.php" method="post">
-            <label for="user_login">Id<br><input type="number" name="customID" min="1" placeholder="Id" value="<?php echo $customID;?>"></label><br>
-            <label for="user_login">Покупець<br><input type="text" name="sname" placeholder="Souvenir Name" value="<?php echo $sname;?>"></label><br>
-            <label for="user_login">Продавець<br><input type="text" name="lastName" placeholder="Last Name" value="<?php echo $lastName;?>"></label><br>
+            <label for="user_login">Id<br><input type="number" name="customID" min="1" value="<?php echo $customID;?>"></label><br>
+            <label for="user_login">Покупець<br><input type="text" name="sname" value="<?php echo $sname;?>"></label><br>
+            <label for="user_login">Продавець<br><input type="text" name="lastName" value="<?php echo $lastName;?>"></label><br>
             <div>
                 <!-- Input For Find Values With The given ID -->
                 <input type="submit" class="button"  name="search" value="Find">
