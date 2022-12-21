@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 16 2022 г., 22:19
+-- Время создания: Дек 20 2022 г., 10:31
 -- Версия сервера: 10.4.25-MariaDB
 -- Версия PHP: 8.1.10
 
@@ -49,7 +49,8 @@ INSERT INTO `animal` (`animalID`, `kind`, `diet`, `employeeID`, `sectionID`) VAL
 (7, 'Панда', 'м\'ясо, фрукти, бамбук', 6, 1),
 (8, 'Тритон', 'рибки, черві', 4, 2),
 (9, 'Рибка Дорі', 'водорості', 9, 4),
-(10, 'Тигр', 'м\'ясо, фрукти', 8, 1);
+(10, 'Тигр', 'м\'ясо, фрукти', 8, 1),
+(12, 'Риба-клоун', 'водорості, Артемія', 10, 4);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,7 @@ INSERT INTO `employee` (`employeeID`, `lastName`, `firstName`, `data_birth`, `po
 (7, 'Кривденко', 'Надія', '1999-09-13', 'Продавець', 8100, 4),
 (8, 'Коваль ', 'Андрій', '1996-11-05', 'Доглядаючий', 9500, 5),
 (9, 'Олійник', 'Наталія', '2000-08-15', 'Доглядаючий', 8500, 2),
-(10, 'Поліщук', 'Володимир', '2000-07-12', 'Доглядаючий', 8000, 1);
+(10, 'Поліщук', 'Володимир', '2000-07-13', 'Доглядаючий', 8000, 1);
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,8 @@ INSERT INTO `ticket` (`ticketID`, `time`, `visitorID`, `sectionID`) VALUES
 (8, '2022-11-05 13:30:00', 2, 3),
 (9, '2022-11-04 13:00:00', 9, 1),
 (10, '2022-11-05 13:00:00', 6, 1),
-(11, '2022-11-05 10:30:00', 7, 2);
+(11, '2022-11-05 10:30:00', 7, 2),
+(13, '2022-11-05 10:59:00', 11, 4);
 
 -- --------------------------------------------------------
 
@@ -194,7 +196,8 @@ INSERT INTO `ticket` (`ticketID`, `time`, `visitorID`, `sectionID`) VALUES
 
 CREATE TABLE `usertbl` (
   `id` int(11) NOT NULL,
-  `full_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -205,10 +208,11 @@ CREATE TABLE `usertbl` (
 -- Дамп данных таблицы `usertbl`
 --
 
-INSERT INTO `usertbl` (`id`, `full_name`, `email`, `username`, `password`, `is_admin`) VALUES
-(3, '1', 'kpv2004f@gmail.com', 'pavlobd22', '123', '2'),
-(58, '123', 'kpv2004f@gmail.com', '123', '123', '2'),
-(57, '12', 'kpv2004f@gmail.com', '12', '12', '0');
+INSERT INTO `usertbl` (`id`, `lastName`, `firstName`, `email`, `username`, `password`, `is_admin`) VALUES
+(3, '1', '', 'kpv2004f@gmail.com', 'pavlobd22', '123', '2'),
+(58, '123', '', 'kpv2004f@gmail.com', '123', '123', '2'),
+(57, '12', '', 'kpv2004f@gmail.com', '12', '12', '0'),
+(59, 'Петренко', 'Павло', 'kpv2004f@gmail.com', 'pavlo', 'pavlo', '0');
 
 -- --------------------------------------------------------
 
@@ -238,9 +242,7 @@ INSERT INTO `visitor` (`visitorID`, `lastName`, `firstName`, `age`) VALUES
 (8, 'Микитюк', 'Анна', 8),
 (9, 'Андрієнко', 'Олена', 10),
 (10, 'Крутоголов', 'Олександр', 7),
-(11, 'Антонова', 'Вікторія', 21),
-(14, '123qweйцу;:%', 'Павло', 19),
-(15, '*&^%$*&(', 'Павло', 23);
+(11, 'Антонова', 'Вікторія', 21);
 
 --
 -- Индексы сохранённых таблиц
@@ -311,19 +313,19 @@ ALTER TABLE `visitor`
 -- AUTO_INCREMENT для таблицы `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `animalID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `animalID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `custom`
 --
 ALTER TABLE `custom`
-  MODIFY `customID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `customID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employeeID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `employeeID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `section`
@@ -335,25 +337,25 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT для таблицы `souvenir`
 --
 ALTER TABLE `souvenir`
-  MODIFY `souvenirID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `souvenirID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticketID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ticketID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `usertbl`
 --
 ALTER TABLE `usertbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT для таблицы `visitor`
 --
 ALTER TABLE `visitor`
-  MODIFY `visitorID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `visitorID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
